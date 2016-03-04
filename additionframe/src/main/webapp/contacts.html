@@ -1,0 +1,12 @@
+<table>
+  <tr>
+    <td><strong>id</strong></td>
+    <td><strong>姓名</strong></td>
+    <td><strong>organizationId</strong></td>
+  </tr>
+  <tr ng-repeat='contact in contacts'>
+    <td>{{contact.id}}</td>
+    <td><a ng-href='#/view/{{contact.id}}'>{{contact.displayName}}</a></td>
+    <td>{{contact.organizationId}}</td>
+  </tr>
+</table>

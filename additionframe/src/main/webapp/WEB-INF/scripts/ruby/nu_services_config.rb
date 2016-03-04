@@ -1,0 +1,64 @@
+# encoding: utf-8
+require 'java'
+java_import 'org.addition.plat.ruby.RubyInitServletContextListener'
+PROP_NAME = RubyInitServletContextListener::PROP_NAME_RUBY_SCRIPTS_PATH
+SCRIPTS_PATH = Java::JavaLang::System.getProperty(PROP_NAME)
+
+require SCRIPTS_PATH + '/init_env'
+require SCRIPTS_PATH + '/java_object'
+java_import 'org.addition.plat.service.INuServicesConfig'
+require 'yaml'
+
+class NuServicesConfigRubyImpl
+  extend JavaObject
+  include INuServicesConfig
+
+  attrs = :api_key, :aes_key, :cache_files_root_dir,
+          :asynchronousable, :deploy_mode,
+          :ftp_server_ip, :ftp_server_port,
+          :dispatching_server_ip, :dispatching_server_port,
+          :storage_info_server_ip, :storage_info_server_port, 
+          :storage_info_server_user_name, :storage_info_server_user_password, 
+          :im_server_ip, :im_server_port, 
+          :im_server_upload_port, :im_server_download_port, 
+          :im_server_packet_size
+  attr_accessor *attrs
+  attr_reader_in_java_style *attrs
+  
+  def isAsynchronousable
+    self.asynchronousable
+  end
+  
+  def isDevelopmentMode
+    self.deploy_mode == 'development'
+  end
+
+  def initialize(cfg_path = '')
+    yaml = YAML.load(File.open(cfg_path + '/nu_services_config.yml'))
+    self.api_key = yaml['api_key']
+    self.aes_key = yaml['aes_key']
+    self.cache_files_root_dir = yaml['cache_files_root_dir']
+
+    self.ftp_server_ip = yaml['ftp_server']['ip']
+    self.ftp_server_port = yaml['ftp_server']['port']
+    
+    self.storage_info_server_ip = yaml['storage_info_server']['ip']
+    self.storage_info_server_port = yaml['storage_info_server']['port']
+    self.storage_info_server_user_name = yaml['storage_info_server']['user_name']
+    self.storage_info_server_user_password = yaml['storage_info_server']['user_password']    
+    
+    self.asynchronousable = yaml['asynchronousable']
+    self.deploy_mode = yaml['deploy_mode']
+       
+    self.dispatching_server_ip = yaml['dispatching_server']['ip']
+    self.dispatching_server_port = yaml['dispatching_server']['port']  
+    
+    self.im_server_ip = yaml['im_server']['ip']
+    self.im_server_port = yaml['im_server']['port']    
+    self.im_server_upload_port = yaml['im_server']['upload_port']      
+    self.im_server_download_port = yaml['im_server']['download_port']         
+    self.im_server_packet_size = yaml['im_server']['packet_size']      
+  end
+end
+
+NuServicesConfigRubyImpl.new SCRIPTS_PATH

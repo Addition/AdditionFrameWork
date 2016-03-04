@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/task
+                           http://www.springframework.org/schema/task/spring-task.xsd
+                           http://cxf.apache.org/jaxrs
+                           http://cxf.apache.org/schemas/jaxrs.xsd
+                           http://cxf.apache.org/jaxws
+                           http://cxf.apache.org/schemas/jaxws.xsd">
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+    <bean id="jacksonJsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+
+    <!-- gzip Feature -->
+    <bean id="gzipFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature">
+        <property name="threshold">
+            <value>1024</value>
+        </property>
+    </bean>
+    <!-- logging Feature -->
+    <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature">
+    </bean>
+
+    <context:component-scan base-package="org.addition" >
+    </context:component-scan>
+
+    <jaxrs:server id="restfulServices" address="/">
+        <jaxrs:serviceBeans>
+         <ref bean="sessionRestService"/>
+<!--             <ref bean="contactsRestService" />
+            <ref bean="sessionsRestService" />
+            <ref bean="filesRestService" />
+            <ref bean="contactGroupRestService" />
+            <ref bean="callsRestServcie" />
+            <ref bean="developmentRestService" />
+            <ref bean="imHistoryRestService" />
+            <ref bean="conferencesRestService" />
+            <ref bean="videosRestService" />
+            <ref bean="topicsRestService" /> -->
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <ref bean="gzipFeature"/>
+            <ref bean="loggingFeature"/>
+            <ref bean="encryptionFeature"/>
+        </jaxrs:features>
+        <jaxrs:inInterceptors>
+            <ref bean='authCheckInInterceptor'/>
+            <ref bean='credentialCheckInInterceptor'/>
+        </jaxrs:inInterceptors>
+        <jaxrs:providers>
+            <ref bean='jacksonJsonProvider'/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <!-- Task executor service  -->
+    <task:executor id="myExecutorService" pool-size="600-700" queue-capacity="1000" />
+</beans>

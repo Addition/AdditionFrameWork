@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<decp> 
+	<description>DECP_门道科技电子商务平台</description>  
+	<systemConfig> 
+		<systemName>DECP_门道科技电子商务平台</systemName>  
+		<systemVersion>V1.0.3[bate]</systemVersion>  
+		<systemDescription>KINCUP介绍</systemDescription>  
+		<uploadLimit>1024</uploadLimit>  
+		<isLoginFailureLock>true</isLoginFailureLock>  
+		<loginFailureLockCount>5</loginFailureLockCount>  
+		<loginFailureLockTime>5</loginFailureLockTime>  
+	</systemConfig> 
+</decp>

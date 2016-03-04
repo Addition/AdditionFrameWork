@@ -1,0 +1,41 @@
+<!-- <div >
+<div id="header" class="container">
+            <h3 class="text-left">
+               	微信
+            </h3>
+
+             <div style="max-width: 300px; margin-top:-16px; margin-left:180px;">
+                <h4 class="text-right">
+                    1.0.1
+                </h4>
+            </div> 
+ </div>
+ <div class="container"> -->
+            <form class="form-login form-horizontal" name="userLogin" ng-controller="userLoginController" >
+                <div class="control-group" style="margin-bottom:0px; margin-top:-4px">
+                <div class="control-group" style="color: #51a351; " margin-top: -44px;">
+                    <h4><i class="icon-lock"></i> 用户登录</h4>
+                </div>
+
+                <div class="control-group" style="margin: 0px auto 0px auto">
+                    <label class="control-label" for="inputPassword">用户名</label>
+                    <div >
+                        <input type="text" ng-model='user.userName' placeholder="输入用户名" required>
+                    </div>
+                </div>
+
+                <div class="control-group"  style="margin: 0px auto 0px auto">
+                    <label class="control-label" for="inputPassword">密码</label>
+                    <div >
+                        <input type="text" ng-model='user.password' placeholder="输入密码" required>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn btn-large btn-primary" ng-click='login(user)' ng-disabled='!userLogin.$valid'>提交</button>
+                    </div>
+                </div>
+            </form>
+<!--    </div>      
+</div> -->

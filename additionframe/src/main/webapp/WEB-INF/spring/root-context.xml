@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/data/jpa
+                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+    <!-- root Context: defines shared resources visible to all other web components -->
+    <context:property-placeholder location="/WEB-INF/spring/mysql.properties"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.driver}" />
+        <property name="jdbcUrl" value="${jdbc.url}" />
+        <property name="user" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+
+        <property name="initialPoolSize" value="${c3p0.initialPoolSize}"/>
+        <property name="minPoolSize" value="${c3p0.minPoolSize}"/>
+        <property name="maxPoolSize" value="${c3p0.maxPoolSize}"/>
+        <property name="acquireIncrement" value="${c3p0.acquireIncrement}"/>
+        <property name="checkoutTimeout" value="${c3p0.checkoutTimeout}" />
+
+        <property name="maxStatements" value="${c3p0.maxStatements}"/>
+        <property name="maxStatementsPerConnection" value="${c3p0.maxStatementsPerConnection}"/>
+
+        <property name="acquireRetryAttempts" value="${c3p0.acquireRetryAttempts}"/>
+        <property name="acquireRetryDelay" value="${c3p0.acquireRetryDelay}"/>
+
+        <property name="maxIdleTime" value="${c3p0.maxIdleTime}"/>
+        <property name="maxConnectionAge" value="${c3p0.maxConnectionAge}"/>
+        <property name="maxIdleTimeExcessConnections" value="${c3p0.maxIdleTimeExcessConnections}" />
+
+        <property name="breakAfterAcquireFailure" value="${c3p0.breakAfterAcquireFailure}"/>
+
+        <property name="autoCommitOnClose" value="${c3p0.autoCommitOnClose}"/>
+
+        <property name="unreturnedConnectionTimeout" value="${c3p0.unreturnedConnectionTimeout}"/>
+        <property name="debugUnreturnedConnectionStackTraces" value="${c3p0.debugUnreturnedConnectionStackTraces}"/>
+
+        <property name="testConnectionOnCheckout" value="${c3p0.testConnectionOnCheckout}"/>
+        <property name="testConnectionOnCheckin" value="${c3p0.testConnectionOnCheckin}"/>
+        <property name="automaticTestTable" value="${c3p0.automaticTestTable}"/>
+        <property name="preferredTestQuery" value="${c3p0.preferredTestQuery}"/>
+        <property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}"/>
+    </bean>
+
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="true" />
+                <property name="database" value="MYSQL" />
+            </bean>
+        </property>
+        <property name="persistenceUnitName" value="nuas" />
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <jpa:repositories base-package="com.genew.nuas.api.dao" />
+
+    <import resource="ruby.xml" />
+    <import resource="groovy.xml" />
+    <import resource="web-services.xml" />
+</beans>

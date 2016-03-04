@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="WeixinService">
+<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+                background-color: #f5f5f5;
+            }
+            #header, .form-login, #footer{
+                max-width: 300px;
+                padding: 0px 29px 0px 29px;
+                border: 1px solid #e5e5e5;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            }
+            #header {
+                background-color: #fff;
+                margin: auto auto -8px auto;
+            }
+
+            .form-login {
+                background-color: #fff;
+                margin: auto auto 10px auto;
+            }
+            .form-login .checkbox {
+                margin-top: -8px;
+                margin-bottom: 10px;
+            }
+            .form-login .control-label {
+                margin-top: 4px;
+                text-align: left;
+                width: 60px;
+            }
+            .form-login .controls {
+                margin-left: 60px;
+            }
+            .form-login input[type="text"],
+            .form-login input[type="password"] {
+                font-size: 16px;
+                height: auto;
+                margin-bottom: 15px;
+                padding: 7px 9px;
+            }
+
+            #footer {
+                max-width: 358px;
+                padding: 0 0 0 0;
+            }
+            #footer {
+                background-color: #eee;
+            }
+            .separator {
+                color: #798699
+            }
+        </style>
+        <script src="angular.js"></script>
+		<script src="controllers.js"></script>
+</head>
+<body>
+    <div ng-view></div>
+</body>
+</html>

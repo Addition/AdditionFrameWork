@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+    
+	<sec:http >
+		<sec:http-basic></sec:http-basic>         
+		<sec:intercept-url pattern="/**" access="ROLE_USER" /> 
+	</sec:http>
+    
+    	<!-- 后台管理权限认证 -->
+	<sec:authentication-provider user-service-ref="adminDetailsServiceImpl">
+		<sec:password-encoder hash="md5" />
+	</sec:authentication-provider>
+
+	<sec:authentication-manager alias="authenticationManager" />
+
+	<!-- 定义权限、资源关系 -->
+	<bean id="filterSecurityInterceptor" class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+		<sec:custom-filter before="FILTER_SECURITY_INTERCEPTOR" />
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="accessDecisionManager" ref="accessDecisionManager" />
+		<property name="objectDefinitionSource" ref="adminSecurityDefinitionSource" />
+	</bean>
+	
+	<bean id="accessDecisionManager" class="org.springframework.security.vote.AffirmativeBased">
+		<property name="decisionVoters">
+			<list>
+				<bean class="org.springframework.security.vote.RoleVoter" />
+				<bean class="org.springframework.security.vote.AuthenticatedVoter" />
+			</list>
+		</property>
+	</bean>
+</beans>

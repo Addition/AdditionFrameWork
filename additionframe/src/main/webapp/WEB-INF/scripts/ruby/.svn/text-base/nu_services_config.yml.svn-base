@@ -1,0 +1,28 @@
+# 牛信服务配置文件
+api_key: gns11529c136998cb6
+aes_key: GenewNuasjklmnopqrstuvwxyz0123ABCDEFG456789
+cache_files_root_dir: '../../cache-files'
+asynchronousable: true
+
+deploy_mode: development
+
+ftp_server:
+  ip: 10.8.9.151
+  port: 21
+
+dispatching_server:
+  ip: 10.8.9.151
+  port: 23310
+
+storage_info_server:
+  ip: 10.8.9.151
+  port: 28000
+  user_name: admin
+  user_password: '888888'
+
+im_server:
+  ip: 10.8.9.151
+  port: 9920
+  upload_port: 9921
+  download_port: 9922
+  packet_size: 65536
